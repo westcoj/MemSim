@@ -6,7 +6,13 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
-
+/**************************************************************************************
+ * This class sets up basic GUI for the simulation. 
+ * 
+ * @author Cody West
+ * @version Memory Sim
+ * @date 04/05/2018
+ *************************************************************************************/
 public class SimGUI extends JFrame implements ActionListener{
 
 	JTextArea results;
@@ -21,20 +27,26 @@ public class SimGUI extends JFrame implements ActionListener{
 	String fileDisplay;
 	ArrayList<String> displayTxt;
 
-	public static void main(String args[]){
-		SimGUI gui = new SimGUI();
-				try {
-					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		gui.setTitle("Memory Simulator");
-		gui.pack();
-		gui.setVisible(true);
-	}
+	//OLD MAIN, USE MAIN CLASS FOR RUNNING SIMULATION
+	//	public static void main(String args[]){
+	//		SimGUI gui = new SimGUI();
+	//				try {
+	//					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+	//				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+	//					// TODO Auto-generated catch block
+	//					e.printStackTrace();
+	//				}
+	//		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	//		gui.setTitle("Memory Simulator");
+	//		gui.pack();
+	//		gui.setVisible(true);
+	//	}
 
+	/*************************************************************************
+	 * Constructor creates the simulation GUI with proper sizes and filename
+	 * for the OpSim class. Places both text displays in proper place along
+	 * with button.
+	 ************************************************************************/
 	public SimGUI(){
 		g = new OpSim("Process.txt");
 		setLayout(new GridBagLayout());
@@ -64,7 +76,7 @@ public class SimGUI extends JFrame implements ActionListener{
 		//		loc.insets.right = 20;
 		//		loc.insets.bottom = 20;
 		add(scrollPane, loc);
-		
+
 		displayTxt = g.getSysTxt();
 		for(int i = 0; i<displayTxt.size();i++){
 			results.append(displayTxt.get(i));
@@ -102,16 +114,20 @@ public class SimGUI extends JFrame implements ActionListener{
 
 	}
 
+	/*************************************************************************
+	 * Method for handling next presses, and ending the simulation.
+	 * @param e Action event initiated
+	 ************************************************************************/
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JComponent buttonPress = (JComponent) e.getSource();
 
 		if(buttonPress == nextButton){
-			
+
 			if(g.getEnd()){
 				System.exit(0);
 			}
-			
+
 			g.readInput();
 			displayTxt = g.getSysTxt();
 			for(int i = 0; i<displayTxt.size();i++){
@@ -121,7 +137,7 @@ public class SimGUI extends JFrame implements ActionListener{
 			for(int i = 0;i<8;i++){
 				frames[i].setText(g.getFrameTxt(i));
 			}
-			
+
 			if(g.getEnd()){
 				results.append("GUI Shutting down...\n");
 				return;

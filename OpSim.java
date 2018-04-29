@@ -2,7 +2,14 @@ package ramSim;
 import java.util.*;
 import java.io.*;
 
-
+/**************************************************************************************
+ * The following class runs the simulator taking in data from a specified file and 
+ * distributing it amongs frames. 
+ * 
+ * @author Cody West
+ * @version Memory Sim
+ * @date 04/05/2018
+ *************************************************************************************/
 public class OpSim {
 	final int totalRam = 4096;
 	final double pageSize = 512.0;
@@ -17,7 +24,10 @@ public class OpSim {
 	ArrayList<String> sysTxt;
 	boolean end;
 
-	//Constructor also loads file
+	/*************************************************************************
+	 * Constructor creates the simulation with proper file.
+	 * @param fileName The name of the file to be used.
+	 ************************************************************************/
 	public OpSim(String fileName){
 		temp = new ArrayList<Integer>();
 		freeFrames = new ArrayList<Integer>();
@@ -26,6 +36,8 @@ public class OpSim {
 		txtData = new String[8];
 		frameList = new int[8];
 		end = false;
+		
+		//This is changed in linux version due to differences in OS.
 		file = new File("C:\\server\\" + fileName);
 
 		for(int i=0;i<8;i++){
@@ -50,11 +62,18 @@ public class OpSim {
 		sysTxt.add("Loading Mem Simulation....");
 	}
 	
+	/*************************************************************************
+	 * Method for getting proper display text for GUI
+	 * @return Current list of display texts.
+	 ************************************************************************/
 	public ArrayList<String> getSysTxt(){
 		return sysTxt;
 	}
 
-	//GET ALL OF FILE TXT FOR DISPLAY
+	/*************************************************************************
+	 * Method for getting proper text from file for GUI
+	 * @return Entirity of text from the file
+	 ************************************************************************/
 	public String getTxt(){
 		String txt = "";
 		try {
@@ -70,14 +89,27 @@ public class OpSim {
 		return txt;
 	}
 	
+	/*************************************************************************
+	 * Method for getting text for each individual frame for GUI
+	 * @return Individual frame's text status
+	 ************************************************************************/
 	public String getFrameTxt(int i){
 		return txtData[i];
 	}
 	
+	/*************************************************************************
+	 * Method for checking for end of simulation
+	 * @return if simulation is over
+	 ************************************************************************/
 	public boolean getEnd(){
 		return end;
 	}
 
+	/*************************************************************************
+	 * Method for getting next line from file and running it through the
+	 * simulation. Either a new process or terminating an old one. Can also
+	 * signal end of simulation.
+	 ************************************************************************/
 	public void readInput(){
 		sysTxt.clear();
 		
@@ -133,6 +165,7 @@ public class OpSim {
 			}
 		}
 
+		//NEW PROCESS INCOMING
 		else{
 
 			token = sc.next();
